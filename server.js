@@ -24,3 +24,7 @@ io.on('connection',(socket)=>{
     })
 })
 
+const PORT = process.env.PORT || 5000; //use PORT not port
+httpServer.listen(PORT, () => {
+  console.log("Listening...");
+});
