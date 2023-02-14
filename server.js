@@ -1,32 +1,14 @@
-const express = require("express");
-const cors = require("cors");
-const { createServer } = require("http");
-const socketIo = require("socket.io");
+const net = require('net');
 
-app = express();
-app.use(express.json());
+const server = net.createServer((socket) => {
+  console.log('Connected to the client');
 
+  // Read the accelerometer data from the pipe
+  socket.on('data', (data) => {
+    console.log(`Received accelerometer data: ${data.toString().trim()}`);
+  });
+});
 
-const httpServer = createServer(app)
-const io = socketIo(httpServer)
-
-app.use(cors({origin:'*'}));
-
-
-app.get('/',async(req,res)=>{
-    res.json({success:'Endpoint Works!'})
-})
-
-io.on('connection',(socket)=>{
-    socket.on('From Phone',(...msg)=>{
-        console.log('From Phone',...msg)
-    })
-    socket.on('Accelerometer Reading',(...msg)=>{
-        console.log('AR',...msg)
-    })
-})
-
-const PORT = process.env.PORT || 5000; //use PORT not port
-httpServer.listen(PORT, () => {
-  console.log("Listening...");
+server.listen(3000, '0.0.0.0', () => {
+  console.log('Server listening on port 3000');
 });
