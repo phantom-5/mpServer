@@ -1,17 +1,16 @@
 const express = require("express");
 const cors = require("cors");
 const { createServer } = require("http");
-const { Server } = require("socket.io");
+const socketIo = require("socket.io");
 
 app = express();
 app.use(express.json());
-app.use(cors());
+
 
 const httpServer = createServer(app)
-const io = new Server(httpServer,{
-    cors:{origin:'*'},
-    transports: ['websocket','polling']
-})
+const io = socketIo(httpServer)
+
+app.use(cors({origin:'*'}));
 
 
 app.get('/',async(req,res)=>{
