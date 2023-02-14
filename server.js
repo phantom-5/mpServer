@@ -22,6 +22,9 @@ io.on('connection',(socket)=>{
     socket.on('From Phone',(...msg)=>{
         console.log('From Phone',...msg)
     })
+    socket.on('Accelerometer Reading',(...msg)=>{
+        console.log('AR',...msg)
+    })
 })
 
 const PORT = process.env.PORT || 5000; //use PORT not port
